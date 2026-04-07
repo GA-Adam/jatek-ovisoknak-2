@@ -1,3 +1,4 @@
+radio.set_group(1)
 megjelenitett_kep = 0
 kitalalando2 = 0
 darab2 = 0
@@ -53,7 +54,6 @@ radio.on_received_value(on_received_value)
 
 def on_forever():
     global megjelenitett_kep
-    radio.set_group(1)
     if jatek_megy:
         megjelenitett_kep = 1
         images.icon_image(IconNames.HEART).show_image(0, 3000)
