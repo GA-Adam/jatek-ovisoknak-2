@@ -1,30 +1,19 @@
-let darab2 = 0
-let kitalalando2 = 0
-let jatek_megy = false
 let megjelenitett_kep = 0
-let darab1 = 0
+let kitalalando2 = 0
+let darab2 = 0
 let ido = 0
-radio.onReceivedNumber(function (receivedNumber) {
-    darab2 = 0
-    kitalalando2 = receivedNumber
-    if (kitalalando2 == 1) {
-        images.iconImage(IconNames.Heart).showImage(0, 3000)
-    } else if (kitalalando2 == 2) {
-        images.iconImage(IconNames.Square).showImage(0, 3000)
-    }
-    visszaszamlalas()
-    jatek_megy = true
-})
+let jatek_megy = false
 input.onButtonPressed(Button.A, function () {
     if (megjelenitett_kep == kitalalando2) {
         basic.clearScreen()
         basic.showIcon(IconNames.Yes)
-        darab1 += 1
+        darab2 += 1
         radio.sendValue("darab2", darab2)
     } else if (megjelenitett_kep != kitalalando2) {
         basic.clearScreen()
         basic.showIcon(IconNames.No)
-        radio.sendString("hamis2")
+        darab2 += 0
+        radio.sendValue("darab2", darab2)
     }
 })
 function visszaszamlalas () {
@@ -45,11 +34,18 @@ radio.onReceivedString(function (receivedString) {
         images.iconImage(IconNames.Sad).showImage(0, 5000)
         basic.clearScreen()
     }
-    if (receivedString == "2esnek pont") {
-        darab2 += 1
-        radio.sendValue("darab2", darab2)
-    } else if (receivedString == "1esnek pont") {
-        darab2 += 0
+})
+radio.onReceivedValue(function (name, value) {
+    if (name == "kitalalando2") {
+        kitalalando2 = value
+        darab2 = 0
+        if (kitalalando2 == 1) {
+            images.iconImage(IconNames.Heart).showImage(0, 3000)
+        } else if (kitalalando2 == 2) {
+            images.iconImage(IconNames.Square).showImage(0, 3000)
+        }
+        visszaszamlalas()
+        jatek_megy = true
     }
 })
 basic.forever(function () {
